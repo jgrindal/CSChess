@@ -1,0 +1,10 @@
+D:\Projects\Misc\Chess\ClassLibrary\bin\Release\Chessbrary.dll
+D:\Projects\Misc\Chess\ClassLibrary\obj\Release\ResolveAssemblyReference.cache
+D:\Projects\Misc\Chess\ClassLibrary\obj\Release\Chessbrary.dll
+D:\Projects\Misc\Chess\Working\ClassLibrary\bin\Release\Chessbrary.dll
+D:\Projects\Misc\Chess\Working\ClassLibrary\obj\Release\ResolveAssemblyReference.cache
+D:\Projects\Misc\Chess\Working\ClassLibrary\obj\Release\Chessbrary.dll
+C:\Users\jgrin\Dropbox\Projects\CSChess\ClassLibrary\bin\Release\Chessbrary.dll
+C:\Users\jgrin\Dropbox\Projects\CSChess\ClassLibrary\obj\Release\ChessLibrary.csprojResolveAssemblyReference.cache
+C:\Users\jgrin\Dropbox\Projects\CSChess\ClassLibrary\obj\Release\ChessLibrary.csproj.CoreCompileInputs.cache
+C:\Users\jgrin\Dropbox\Projects\CSChess\ClassLibrary\obj\Release\Chessbrary.dll

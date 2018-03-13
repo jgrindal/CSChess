@@ -1,3 +1,11 @@
+/***************************************************************
+ * File: Piece.cs
+ * Created By: Justin Grindal		Date: 27 June, 2013
+ * Description: A class for the chess piece. It stores the type of chess piece properties
+ * like type, power etc. It also contains chess piece methods like
+ * get next move, move, etc
+ ***************************************************************/
+
 using System;
 
 namespace ChessLibrary 
@@ -11,9 +19,9 @@ namespace ChessLibrary
 	public class Piece
 	{
 		// chess piece class attributes
-		int moves;			// total no. of moves by the piece
-		Side side;			// The ches side i.e. white/back to which this piece belongs
-		PieceType type;		// type of the chess piece i.e. king, queen etc.
+		int m_moves;			// total no. of moves by the piece
+		Side m_side;			// The ches side i.e. white/back to which this piece belongs
+		PieceType m_type;		// type of the chess piece i.e. king, queen etc.
 
 		public enum PieceType {Empty, King, Queen, Rook, Bishop, Knight, Pawn};	// define the possible types for chess piece
 
@@ -26,62 +34,62 @@ namespace ChessLibrary
 		// constructore with a given piece type
 		public Piece(PieceType type)
 		{
-			this.type = type;
+			this.m_type = type;
 		}
 
 		// constructore with a given piece type and side
 		public Piece(PieceType type, Side side)
 		{
-			this.type = type;
-			this.side = side;
+			this.m_type = type;
+			this.m_side = side;
 		}
 
 		// Return true if the piece position is empty
 		public bool IsEmpty()
 		{
-			return type==PieceType.Empty;
+			return m_type==PieceType.Empty;
 		}
 
 		// Return true if the piece is pawn
 		public bool IsPawn()
 		{
-			return type==PieceType.Pawn;
+			return m_type==PieceType.Pawn;
 		}
 
 		// Return true if the piece is knight
 		public bool IsKnight()
 		{
-			return type==PieceType.Knight;
+			return m_type==PieceType.Knight;
 		}
 
 		// Return true if the piece is bishop
 		public bool IsBishop()
 		{
-			return type==PieceType.Bishop;
+			return m_type==PieceType.Bishop;
 		}
 
 		// Return true if the piece is rook
 		public bool IsRook()
 		{
-			return type==PieceType.Rook;
+			return m_type==PieceType.Rook;
 		}
 
 		// Return true if the piece is queen
 		public bool IsQueen()
 		{
-			return type==PieceType.Queen;
+			return m_type==PieceType.Queen;
 		}
 
 		// Return true if the piece is King
 		public bool IsKing()
 		{
-			return type==PieceType.King;
+			return m_type==PieceType.King;
 		}
 
 		// returns the string for the piece
 		public override string ToString()
 		{
-			switch (type)
+			switch (m_type)
 			{
 				case PieceType.King:
 					return "King";
@@ -103,7 +111,7 @@ namespace ChessLibrary
 		// Returns back weight of the chess peice
 		public int GetWeight()
 		{
-			switch (type)
+			switch (m_type)
 			{
 				case PieceType.King:
 					return 0;
@@ -128,11 +136,11 @@ namespace ChessLibrary
 		{
 			get
 			{
-				return type;
+				return m_type;
 			}
 			set
 			{
-				type=value;
+				m_type=value;
 			}
 		}
 
@@ -141,11 +149,11 @@ namespace ChessLibrary
 		{
 			get
 			{
-				return side;
+				return m_side;
 			}
 			set
 			{
-				side=value;
+				m_side=value;
 			}
 		}
 
@@ -154,11 +162,11 @@ namespace ChessLibrary
 		{
 			get
 			{
-				return moves;
+				return m_moves;
 			}
 			set
 			{
-				moves=value;
+				m_moves=value;
 			}
 		}
 		#endregion

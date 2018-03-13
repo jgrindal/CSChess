@@ -8,7 +8,7 @@ namespace Chess
 	/// </summary>
 	public class Sounds
 	{
-		private string parentFolder;
+		private string m_ParentFolder;
 	
 		// these are the SoundFlags we are using here, check mmsystem.h for more
 		private int SND_ASYNC    = 0x0001;     // play asynchronously
@@ -17,7 +17,7 @@ namespace Chess
 
 		public Sounds(string folder)
 		{	
-			parentFolder=folder;
+			m_ParentFolder=folder;
 		}
 
 		// Call the native Win32 API to play the sound
@@ -41,35 +41,35 @@ namespace Chess
 		public void PlayClick()
 		{
 			StopPlay();
-			Play(parentFolder+"click.wav");
+			Play(m_ParentFolder+"click.wav");
 		}
 
 		// Play the normal move sound
 		public void PlayNormalMove()
 		{
 			StopPlay();
-			Play(parentFolder+"normal_move.wav");
+			Play(m_ParentFolder+"normal_move.wav");
 		}
 
 		// Play the capture move sound
 		public void PlayCaptureMove()
 		{
 			StopPlay();
-			Play(parentFolder+"capture_move.wav");
+			Play(m_ParentFolder+"capture_move.wav");
 		}
 
 		// Play the under check sound
 		public void PlayCheck()
 		{
 			StopPlay();
-			Play(parentFolder+"check.wav");
+			Play(m_ParentFolder+"check.wav");
 		}
 
 		// Play the game over sound
 		public void PlayGameOver()
 		{
 			StopPlay();
-			Play(parentFolder+"game_over.wav");
+			Play(m_ParentFolder+"game_over.wav");
 		}
 
 	}

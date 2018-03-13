@@ -1,3 +1,11 @@
+/***************************************************************
+ * File: Move.cs
+ * Created By: Justin Grindal		Date: 02 July, 2013
+ * Description: This class stores info about a single chess game move.
+ * It contains source and target chess squars/cells and also the type
+ * of move and related info.
+ ***************************************************************/
+
 using System;
 
 namespace ChessLibrary
@@ -12,29 +20,29 @@ namespace ChessLibrary
 	{
 		public enum MoveType {NormalMove, CaputreMove, TowerMove, PromotionMove, EnPassant};	// Type of the move
 
-		private Cell startCell;	// start cell
-		private Cell endCell;		// end cell
-		private Piece piece;			// Piece being moved
-		private Piece capturedPiece;	// Piece captured by this mov
-		private Piece promoPiece;		// Piece selected after pawn promotion
-		private Piece enPassantPiece;	// Piece captured during enpassant move
-		private MoveType type;		// Type of the move
-		private bool causeCheck;		// if cause or leave the user under check
-		private int	score;			// Score of the move from the board analyze routine
+		private Cell m_StartCell;	// start cell
+		private Cell m_EndCell;		// end cell
+		private Piece m_Piece;			// Piece being moved
+		private Piece m_CapturedPiece;	// Piece captured by this mov
+		private Piece m_PromoPiece;		// Piece selected after pawn promotion
+		private Piece m_EnPassantPiece;	// Piece captured during enpassant move
+		private MoveType m_Type;		// Type of the move
+		private bool m_CauseCheck;		// if cause or leave the user under check
+		private int	m_Score;			// Score of the move from the board analyze routine
 
         // Emptry internal constructor for XML Serialization support
         internal Move()
         {
-            score = 0;
+            m_Score = 0;
         }
 
 		public Move(Cell begin, Cell end)
 		{
-			startCell=begin;
-			endCell=end;
-			piece=begin.piece;
-			capturedPiece=end.piece;
-			score=0;
+			m_StartCell=begin;
+			m_EndCell=end;
+			m_Piece=begin.piece;
+			m_CapturedPiece=end.piece;
+			m_Score=0;
 		}
 
 		// Returns the move start cell
@@ -42,11 +50,11 @@ namespace ChessLibrary
 		{
 			get
 			{
-				return startCell;
+				return m_StartCell;
 			}
             set
             {
-                startCell = value;
+                m_StartCell = value;
             }
 		}
 
@@ -55,11 +63,11 @@ namespace ChessLibrary
 		{
 			get
 			{
-				return endCell;
+				return m_EndCell;
 			}
             set
             {
-                endCell = value;
+                m_EndCell = value;
             }
 		}
 
@@ -68,11 +76,11 @@ namespace ChessLibrary
 		{
 			get
 			{
-				return piece;
+				return m_Piece;
 			}
             set
             {
-                piece = value;
+                m_Piece = value;
             }
 		}
 
@@ -81,11 +89,11 @@ namespace ChessLibrary
 		{
 			get
 			{
-				return capturedPiece;
+				return m_CapturedPiece;
 			}
             set
             {
-                capturedPiece = value;
+                m_CapturedPiece = value;
             }
 		}
 
@@ -94,11 +102,11 @@ namespace ChessLibrary
 		{
 			get
 			{
-				return type;
+				return m_Type;
 			}
 			set
 			{
-				type=value;
+				m_Type=value;
 			}
 		}
 
@@ -107,11 +115,11 @@ namespace ChessLibrary
 		{
 			get
 			{
-				return causeCheck;
+				return m_CauseCheck;
 			}
 			set
 			{
-				causeCheck=value;
+				m_CauseCheck=value;
 			}
 		}
 
@@ -120,11 +128,11 @@ namespace ChessLibrary
 		{
 			get
 			{
-				return promoPiece;
+				return m_PromoPiece;
 			}
 			set
 			{
-				promoPiece=value;
+				m_PromoPiece=value;
 			}
 		}
 
@@ -133,11 +141,11 @@ namespace ChessLibrary
 		{
 			get
 			{
-				return enPassantPiece;
+				return m_EnPassantPiece;
 			}
 			set
 			{
-				enPassantPiece=value;
+				m_EnPassantPiece=value;
 			}
 		}
 
@@ -146,33 +154,33 @@ namespace ChessLibrary
 		{
 			get
 			{
-				return score;
+				return m_Score;
 			}
 			set
 			{
-				score=value;
+				m_Score=value;
 			}
 		}
 
 		// Return true if the move was promo move
 		public bool IsPromoMove()
 		{
-			return type==MoveType.PromotionMove;
+			return m_Type==MoveType.PromotionMove;
 		}
 
 		// Return true if the move was capture move
 		public bool IsCaptureMove()
 		{
-			return type==MoveType.CaputreMove;
+			return m_Type==MoveType.CaputreMove;
 		}
 
 		//Return a descriptive move text
 		public override string ToString()
 		{
-			if (type == Move.MoveType.CaputreMove)	// It's a capture move
-				return piece + " " + startCell.ToString2() + "x" + endCell.ToString2();
+			if (m_Type == Move.MoveType.CaputreMove)	// It's a capture move
+				return m_Piece + " " + m_StartCell.ToString2() + "x" + m_EndCell.ToString2();
 			else
-				return piece + " " + startCell.ToString2() + "-" + endCell.ToString2();
+				return m_Piece + " " + m_StartCell.ToString2() + "-" + m_EndCell.ToString2();
 		}
 	}
 

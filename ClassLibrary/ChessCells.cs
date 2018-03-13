@@ -1,3 +1,10 @@
+/***************************************************************
+ * File: Cells.cs
+ * Created By: Justin Grindal		Date: 27 June, 2013
+ * Description: This class is a collection of the Cell objects
+ * and provide methods to add and remove chess cells
+ ***************************************************************/
+
 using System;
 using System.Collections.Specialized;
 using System.Collections;
@@ -11,11 +18,11 @@ namespace ChessLibrary
     [Serializable]
 	public class Cells
 	{
-		Hashtable cells;
+		Hashtable m_Cells;
 
 		public Cells()
 		{
-			cells = new Hashtable();	// Make a list of the cells
+			m_Cells = new Hashtable();	// Make a list of the cells
 		}
 
 		// return the unique key for the cell
@@ -33,21 +40,21 @@ namespace ChessLibrary
 		// Add new cell to the collection
 		public void Add(Cell newcell)
 		{
-			cells.Add(GetKey(newcell), newcell);	// Add the new object to the cell collection
+			m_Cells.Add(GetKey(newcell), newcell);	// Add the new object to the cell collection
 		}
 
 		// remove the given cell from the collection
 		public void Remove(int row, int col)
 		{
 			string key=GetKey(row,col);
-			if (cells.ContainsKey(key)) // if the item exists in the collection
-				cells.Remove(key);	  // remove it
+			if (m_Cells.ContainsKey(key)) // if the item exists in the collection
+				m_Cells.Remove(key);	  // remove it
 		}
 
 		// remove all the cell objects from the collection
 		public void Clear()
 		{
-			cells.Clear();
+			m_Cells.Clear();
 		}
 
 		// get the new item by rew and column
@@ -55,7 +62,7 @@ namespace ChessLibrary
 		{
 			get
 			{
-				return (Cell)cells[GetKey(row,col)];
+				return (Cell)m_Cells[GetKey(row,col)];
 			}
 		}
 
@@ -66,7 +73,7 @@ namespace ChessLibrary
 			{
 				int col=char.Parse(strloc.Substring(0,1).ToUpper())-64; // Get row from first ascii char i.e. a=1, b=2 and so on
 				int row=int.Parse(strloc.Substring(1,1));				  // Get column value directly, as it's already numeric
-				return (Cell)cells[GetKey(row,col)];
+				return (Cell)m_Cells[GetKey(row,col)];
 			}
 		}
 
@@ -108,7 +115,7 @@ namespace ChessLibrary
                 for (int col = 1; col <= 8; col++)
                 {
                     Cell cell = (Cell)XMLHelper.XmlDeserialize(typeof(Cell), cellXml.OuterXml);
-                    cells[GetKey(row, col)] = cell;
+                    m_Cells[GetKey(row, col)] = cell;
 
                     // Get the next node XML
                     cellXml = cellXml.NextSibling;

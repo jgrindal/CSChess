@@ -1,3 +1,9 @@
+/***************************************************************
+ * File: ChessBoard.cs
+ * Created By: Justin Grindal		Date: 29 June, 2013
+ * Description: This class implements the acutal chess board UI.
+ * This class handles drawing and events handling for the board
+ ***************************************************************/
 using System;
 using System.Collections;
 using System.Windows.Forms;
@@ -366,7 +372,7 @@ namespace Chess
             // Show the File Save as dialog and get the target file path
             SaveFileDialog saveAsDialog = new SaveFileDialog();
             saveAsDialog.Title = "Save file as...";
-            saveAsDialog.Filter = "Quick Chess File (*.qcf)|*.qcf";
+            saveAsDialog.Filter = "CSChess File (*.qcf)|*.qcf";
             saveAsDialog.RestoreDirectory = true;
 
             if (saveAsDialog.ShowDialog() == DialogResult.OK)
@@ -384,8 +390,8 @@ namespace Chess
         {
             // Show the File Save as dialog and get the target file path
             OpenFileDialog openDialog = new OpenFileDialog();
-            openDialog.Title = "Load Quick Chess file...";
-            openDialog.Filter = "Quick Chess File (*.qcf)|*.qcf";
+            openDialog.Title = "Load CSChess file...";
+            openDialog.Filter = "CSChess File (*.qcf)|*.qcf";
             openDialog.RestoreDirectory = true;
 
             if (openDialog.ShowDialog() == DialogResult.OK)

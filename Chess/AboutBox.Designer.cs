@@ -84,7 +84,7 @@
             this.labelProductName.Name = "labelProductName";
             this.labelProductName.Size = new System.Drawing.Size(271, 17);
             this.labelProductName.TabIndex = 19;
-            this.labelProductName.Text = "Quick Chess";
+            this.labelProductName.Text = "CSChess";
             this.labelProductName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // labelVersion
@@ -108,7 +108,7 @@
             this.labelCopyright.Name = "labelCopyright";
             this.labelCopyright.Size = new System.Drawing.Size(271, 17);
             this.labelCopyright.TabIndex = 21;
-            this.labelCopyright.Text = "Copyright (c) 208 Syed Ghulam Akbar";
+            this.labelCopyright.Text = "Copyright (c) 208 Justin Grindal";
             this.labelCopyright.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // textBoxDescription

@@ -1,3 +1,10 @@
+/***************************************************************
+ * File: Cell.cs
+ * Created By: Justin Grindal		Date: 27 June, 2013
+ * Description: A class for the chess cell. It stores the type of chess cell and
+ * type of chess piece placed in this cell
+ ***************************************************************/
+
 using System;
 
 namespace ChessLibrary
@@ -10,22 +17,22 @@ namespace ChessLibrary
 	public class Cell
 	{
 		// chess cell attribute
-		Piece piece;
-		int row;
-		int col;
+		Piece m_piece;
+		int m_row;
+		int m_col;
 
 		// Empty constructor to initalize the row and column for the cell
 		public Cell()
 		{
-			row=0;
-			col=0;
+			m_row=0;
+			m_col=0;
 		}
 
 		// Empty constructor to initalize the row and column for the cell
 		public Cell(int irow, int icol)
 		{
-			row=irow;
-			col=icol;
+			m_row=irow;
+			m_col=icol;
 		}
 
 		// Set the chess rows and columns from the given text string
@@ -33,8 +40,8 @@ namespace ChessLibrary
 		{
 			if(strLoc.Length==2)	// check if valid location string
 			{
-				col=char.Parse(strLoc.Substring(0,1).ToUpper())-64; // Get row from first ascii char i.e. a=1, b=2 and so on
-				row=int.Parse(strLoc.Substring(1,1));				  // Get column value directly, as it's already numeric
+				m_col=char.Parse(strLoc.Substring(0,1).ToUpper())-64; // Get row from first ascii char i.e. a=1, b=2 and so on
+				m_row=int.Parse(strLoc.Substring(1,1));				  // Get column value directly, as it's already numeric
 			}
 		}
 
@@ -90,18 +97,18 @@ namespace ChessLibrary
 		{
 			get
 			{
-				return row;
+				return m_row;
 			}
 			set
 			{
-				row=value;
+				m_row=value;
 			}
 		}
 
 		// returns true if the cell is empty
 		public bool IsEmpty()
 		{
-			return piece == null || piece.Type == Piece.PieceType.Empty;
+			return m_piece == null || m_piece.Type == Piece.PieceType.Empty;
 		}
 
 		// returns true if the cell is owned by enemy of the given cell
@@ -110,7 +117,7 @@ namespace ChessLibrary
 			if (IsEmpty())
 				return false;
 			else
-                return piece.Side.type != other.piece.Side.type;
+                return m_piece.Side.type != other.piece.Side.type;
 		}
 
 		// returns true if the current cell is owned by source cell
@@ -119,7 +126,7 @@ namespace ChessLibrary
 			if (IsEmpty())
 				return false;
 			else
-				return piece.Side.type == other.piece.Side.type;
+				return m_piece.Side.type == other.piece.Side.type;
 		}
 
 		// Get and set the cell column
@@ -127,11 +134,11 @@ namespace ChessLibrary
 		{
 			get
 			{
-				return col;
+				return m_col;
 			}
 			set
 			{
-				col=value;
+				m_col=value;
 			}
 		}
 
@@ -140,11 +147,11 @@ namespace ChessLibrary
 		{
 			get
 			{
-				return piece;
+				return m_piece;
 			}
 			set
 			{
-				piece=value;
+				m_piece=value;
 			}
 		}
 		#endregion

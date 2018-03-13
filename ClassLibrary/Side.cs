@@ -1,3 +1,10 @@
+/***************************************************************
+ * File: Side.cs
+ * Created By: Justin Grindal		Date: 27 June, 2013
+ * Description: A class for the chess side i.e. White or Black.
+ * 
+ ***************************************************************/
+
 using System;
 using System.Xml;
 
@@ -9,7 +16,7 @@ namespace ChessLibrary
     [Serializable]
 	public class Side
 	{
-        SideType side;
+        SideType m_side;
 		public enum SideType {White, Black};
 
         // Initialize a side with given type
@@ -20,7 +27,7 @@ namespace ChessLibrary
 		// Initialize a side with given type
         public Side(SideType side)
 		{
-			side=side;
+			m_side=side;
 		}
 
 		// Set the side type
@@ -28,11 +35,11 @@ namespace ChessLibrary
 		{
 			get
 			{
-				return side;
+				return m_side;
 			}
 			set
 			{
-				side = value;
+				m_side = value;
 			}
 		}
 
@@ -72,7 +79,7 @@ namespace ChessLibrary
             XmlElement xmlNode = xmlDoc.CreateElement("Side");
 
             // Serialize and append to the side object
-            xmlNode.InnerXml = XMLHelper.XmlSerialize(typeof(SideType), side);
+            xmlNode.InnerXml = XMLHelper.XmlSerialize(typeof(SideType), m_side);
 
             // Return this as String
             return xmlNode;
@@ -85,7 +92,7 @@ namespace ChessLibrary
         public void XmlDeserialize(XmlNode xmlSide)
         {
             // Serialize and append to the side object
-            side = (SideType) XMLHelper.XmlDeserialize(typeof(SideType), xmlSide.InnerXml);
+            m_side = (SideType) XMLHelper.XmlDeserialize(typeof(SideType), xmlSide.InnerXml);
         }
 	}
 }

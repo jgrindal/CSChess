@@ -1,3 +1,11 @@
+/***************************************************************
+ * File: Board.cs
+ * Created By: Justin Grindal		Date: 27 June, 2013
+ * Description: The main chess board. Board contain the chess cell
+ * which will contain the chess pieces. Board also contains the methods
+ * to get and set the user moves.
+ ***************************************************************/
+
 using System;
 using System.Collections;
 using System.Xml;
@@ -12,52 +20,52 @@ namespace ChessLibrary
     [Serializable]
 	public class Board
 	{
-		private Side whiteSide, blackSide;	// Chess board site object 
-		private Cells cells;	// collection of cells in the board
+		private Side m_WhiteSide, m_BlackSide;	// Chess board site object 
+		private Cells m_cells;	// collection of cells in the board
 
 		public Board()
 		{
-            whiteSide = new Side(Side.SideType.White);	// Makde white side
-            blackSide = new Side(Side.SideType.Black);	// Makde white side
+            m_WhiteSide = new Side(Side.SideType.White);	// Makde white side
+            m_BlackSide = new Side(Side.SideType.Black);	// Makde white side
 
-			cells = new Cells();					// Initialize the chess cells collection
+			m_cells = new Cells();					// Initialize the chess cells collection
 		}
 
 		// Initialize the chess board and place piece on thier initial positions
 		public void Init()
 		{
-			cells.Clear();		// Remove any existing chess cells
+			m_cells.Clear();		// Remove any existing chess cells
 
 			// Build the 64 chess board cells
 			for (int row=1; row<=8; row++)
 				for (int col=1; col<=8; col++)
 				{
-					cells.Add(new Cell(row,col));	// Initialize and add the new chess cell
+					m_cells.Add(new Cell(row,col));	// Initialize and add the new chess cell
 				}
 
 			// Now setup the board for black side
-			cells["a1"].piece = new Piece(Piece.PieceType.Rook,blackSide);
-			cells["h1"].piece = new Piece(Piece.PieceType.Rook,blackSide);
-			cells["b1"].piece = new Piece(Piece.PieceType.Knight,blackSide);
-			cells["g1"].piece = new Piece(Piece.PieceType.Knight,blackSide);
-			cells["c1"].piece = new Piece(Piece.PieceType.Bishop,blackSide);
-			cells["f1"].piece = new Piece(Piece.PieceType.Bishop,blackSide);
-			cells["e1"].piece = new Piece(Piece.PieceType.King,blackSide);
-			cells["d1"].piece = new Piece(Piece.PieceType.Queen,blackSide);
+			m_cells["a1"].piece = new Piece(Piece.PieceType.Rook,m_BlackSide);
+			m_cells["h1"].piece = new Piece(Piece.PieceType.Rook,m_BlackSide);
+			m_cells["b1"].piece = new Piece(Piece.PieceType.Knight,m_BlackSide);
+			m_cells["g1"].piece = new Piece(Piece.PieceType.Knight,m_BlackSide);
+			m_cells["c1"].piece = new Piece(Piece.PieceType.Bishop,m_BlackSide);
+			m_cells["f1"].piece = new Piece(Piece.PieceType.Bishop,m_BlackSide);
+			m_cells["e1"].piece = new Piece(Piece.PieceType.King,m_BlackSide);
+			m_cells["d1"].piece = new Piece(Piece.PieceType.Queen,m_BlackSide);
 			for (int col=1; col<=8; col++)
-				cells[2, col].piece = new Piece(Piece.PieceType.Pawn,blackSide);
+				m_cells[2, col].piece = new Piece(Piece.PieceType.Pawn,m_BlackSide);
 
 			// Now setup the board for white side
-			cells["a8"].piece = new Piece(Piece.PieceType.Rook,whiteSide);
-			cells["h8"].piece = new Piece(Piece.PieceType.Rook,whiteSide);
-			cells["b8"].piece = new Piece(Piece.PieceType.Knight,whiteSide);
-			cells["g8"].piece = new Piece(Piece.PieceType.Knight,whiteSide);
-			cells["c8"].piece = new Piece(Piece.PieceType.Bishop,whiteSide);
-			cells["f8"].piece = new Piece(Piece.PieceType.Bishop,whiteSide);
-			cells["e8"].piece = new Piece(Piece.PieceType.King,whiteSide);
-			cells["d8"].piece = new Piece(Piece.PieceType.Queen,whiteSide);
+			m_cells["a8"].piece = new Piece(Piece.PieceType.Rook,m_WhiteSide);
+			m_cells["h8"].piece = new Piece(Piece.PieceType.Rook,m_WhiteSide);
+			m_cells["b8"].piece = new Piece(Piece.PieceType.Knight,m_WhiteSide);
+			m_cells["g8"].piece = new Piece(Piece.PieceType.Knight,m_WhiteSide);
+			m_cells["c8"].piece = new Piece(Piece.PieceType.Bishop,m_WhiteSide);
+			m_cells["f8"].piece = new Piece(Piece.PieceType.Bishop,m_WhiteSide);
+			m_cells["e8"].piece = new Piece(Piece.PieceType.King,m_WhiteSide);
+			m_cells["d8"].piece = new Piece(Piece.PieceType.Queen,m_WhiteSide);
 			for (int col=1; col<=8; col++)
-				cells[7, col].piece = new Piece(Piece.PieceType.Pawn,whiteSide);
+				m_cells[7, col].piece = new Piece(Piece.PieceType.Pawn,m_WhiteSide);
 		}
 
 		// get the new item by rew and column
@@ -65,7 +73,7 @@ namespace ChessLibrary
 		{
 			get
 			{
-				return cells[row, col];
+				return m_cells[row, col];
 			}
 		}
 
@@ -74,7 +82,7 @@ namespace ChessLibrary
 		{
 			get
 			{
-				return cells[strloc];	
+				return m_cells[strloc];	
 			}
 		}
 
@@ -83,7 +91,7 @@ namespace ChessLibrary
 		{
 			get
 			{
-				return cells[cellobj.ToString()];	
+				return m_cells[cellobj.ToString()];	
 			}
 		}
 
@@ -96,10 +104,10 @@ namespace ChessLibrary
             XmlElement xmlBoard = xmlDoc.CreateElement("Board");
 
             // Append game state attributes
-            xmlBoard.AppendChild(whiteSide.XmlSerialize(xmlDoc));
-            xmlBoard.AppendChild(blackSide.XmlSerialize(xmlDoc));
+            xmlBoard.AppendChild(m_WhiteSide.XmlSerialize(xmlDoc));
+            xmlBoard.AppendChild(m_BlackSide.XmlSerialize(xmlDoc));
 
-            xmlBoard.AppendChild(cells.XmlSerialize(xmlDoc));
+            xmlBoard.AppendChild(m_cells.XmlSerialize(xmlDoc));
 
             // Return this as String
             return xmlBoard;
@@ -115,12 +123,12 @@ namespace ChessLibrary
             XmlNode side = XMLHelper.GetFirstNodeByName(xmlBoard, "Side");
 
             // Deserialize the XML nodes
-            whiteSide.XmlDeserialize(side);
-            blackSide.XmlDeserialize(side.NextSibling);
+            m_WhiteSide.XmlDeserialize(side);
+            m_BlackSide.XmlDeserialize(side.NextSibling);
 
             // Deserialize the Cells
             XmlNode xmlCells = XMLHelper.GetFirstNodeByName(xmlBoard, "Cells");
-            cells.XmlDeserialize(xmlCells);
+            m_cells.XmlDeserialize(xmlCells);
         }
 
 		// get all the cell locations on the chess board

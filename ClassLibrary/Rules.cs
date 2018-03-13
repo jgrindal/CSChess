@@ -1,3 +1,9 @@
+/***************************************************************
+ * File: Piece.cs
+ * Created By: Justin Grindal		Date: 27 June, 2013
+ * Description: This class contains all the chess game pieces movement
+ * rules.
+ ***************************************************************/
 using System;
 using System.Collections;
 
@@ -9,13 +15,13 @@ namespace ChessLibrary
 	/// </summary>
 	public class Rules
 	{
-		private Board board;	// store a reference to the game board
-		private Game game;	// store a reference to the current game
+		private Board m_Board;	// store a reference to the game board
+		private Game m_Game;	// store a reference to the current game
 
 		public Rules(Board board, Game game)
 		{
-			board=board;
-			game=game;
+			m_Board=board;
+			m_Game=game;
 		}
 
 		// Return the current game board object
@@ -23,7 +29,7 @@ namespace ChessLibrary
 		{
 			get 
 			{
-				return board;	
+				return m_Board;	
 			}
 		}
 
@@ -32,7 +38,7 @@ namespace ChessLibrary
 		{
 			get 
 			{
-				return game;	
+				return m_Game;	
 			}
 		}
 
@@ -60,9 +66,9 @@ namespace ChessLibrary
 		public int DoMove(Move move)
 		{
 			// first of all check here that if move is legal i.e we can make a move
-            ArrayList LegalMoves = GetLegalMoves(board[move.StartCell]);
+            ArrayList LegalMoves = GetLegalMoves(m_Board[move.StartCell]);
 
-            if (!LegalMoves.Contains(board[move.EndCell]))	// Not a legal move
+            if (!LegalMoves.Contains(m_Board[move.EndCell]))	// Not a legal move
 				return -2;	// Return illegal move error
 
 			// Now if we can move check and execute the move
@@ -137,9 +143,9 @@ namespace ChessLibrary
 		// Do the normal move i.e. desitnation is empty; simply move the source piece
 		private void DoNormalMove(Move move)
 		{
-			board[move.StartCell].piece.Moves++;	// incremenet moves
-			board[move.EndCell].piece = board[move.StartCell].piece;		// Move object at the destination
-			board[move.StartCell].piece = new Piece(Piece.PieceType.Empty);	// Empty the source location
+			m_Board[move.StartCell].piece.Moves++;	// incremenet moves
+			m_Board[move.EndCell].piece = m_Board[move.StartCell].piece;		// Move object at the destination
+			m_Board[move.StartCell].piece = new Piece(Piece.PieceType.Empty);	// Empty the source location
 		}
 
 		// Do the castling/tower move. King interchanges it's position with it's rock
@@ -150,16 +156,16 @@ namespace ChessLibrary
 			// Now check the direction of the king movement
 			if (move.EndCell.col > move.StartCell.col) // moving right
 			{
-				Cell rockcell = board.RightCell(move.EndCell);
-				Move newmove = new Move(rockcell,board.LeftCell(move.EndCell)); // create the move for rock
+				Cell rockcell = m_Board.RightCell(move.EndCell);
+				Move newmove = new Move(rockcell,m_Board.LeftCell(move.EndCell)); // create the move for rock
 				DoNormalMove(newmove); // Move the rock
 			}
 			else
 			{
 				// Move to the left side
-				Cell rockcell = board.LeftCell(move.EndCell);
-                rockcell = board.LeftCell(rockcell);
-				Move newmove = new Move(rockcell,board.RightCell(move.EndCell)); // create the move for rock
+				Cell rockcell = m_Board.LeftCell(move.EndCell);
+                rockcell = m_Board.LeftCell(rockcell);
+				Move newmove = new Move(rockcell,m_Board.RightCell(move.EndCell)); // create the move for rock
 				DoNormalMove(newmove); // Move the rock
 			}
 		}
@@ -170,9 +176,9 @@ namespace ChessLibrary
 			DoNormalMove(move);	// Do the normal move
 			// check if promo piece is already selected by the user
 			if (move.PromoPiece==null)
-				board[move.EndCell].piece = new Piece(Piece.PieceType.Queen, board[move.EndCell].piece.Side);	// Set the end cell to queen
+				m_Board[move.EndCell].piece = new Piece(Piece.PieceType.Queen, m_Board[move.EndCell].piece.Side);	// Set the end cell to queen
 			else
-				board[move.EndCell].piece = move.PromoPiece;
+				m_Board[move.EndCell].piece = move.PromoPiece;
 		}
 
 		// Do the EnPassant Move
@@ -181,9 +187,9 @@ namespace ChessLibrary
 			Cell EnPassantCell;
 
 			if (move.StartCell.piece.Side.isWhite())	// white piece is moving
-				EnPassantCell = board.BottomCell(move.EndCell);	// Get the cell under target position
+				EnPassantCell = m_Board.BottomCell(move.EndCell);	// Get the cell under target position
 			else
-				EnPassantCell = board.TopCell(move.EndCell);	// Get the cell under target position
+				EnPassantCell = m_Board.TopCell(move.EndCell);	// Get the cell under target position
 
 			move.EnPassantPiece = EnPassantCell.piece;				// Save a reference to the en passant cell
 			EnPassantCell.piece = new Piece(Piece.PieceType.Empty);	// Empty the en-passant cell
@@ -203,22 +209,22 @@ namespace ChessLibrary
 				if (move.EndCell.col > move.StartCell.col) // moving right
 				{
 					// Now move the rook back to it's orignal position
-					Cell source = board.LeftCell(move.EndCell);	// Get the new position of the rock
-					Cell target = board[move.StartCell.row, 8];	// Get the rook orignal position
+					Cell source = m_Board.LeftCell(move.EndCell);	// Get the new position of the rock
+					Cell target = m_Board[move.StartCell.row, 8];	// Get the rook orignal position
 
-					board[source].piece.Moves--;	// decrement moves
-					board[target].piece = board[source].piece;		// Move object at the destination
-					board[source].piece = new Piece(Piece.PieceType.Empty);	// Empty the source location	
+					m_Board[source].piece.Moves--;	// decrement moves
+					m_Board[target].piece = m_Board[source].piece;		// Move object at the destination
+					m_Board[source].piece = new Piece(Piece.PieceType.Empty);	// Empty the source location	
 				}
 				else	// Moving Left
 				{
 					// Now move the rook back to it's orignal position
-					Cell source = board.RightCell(move.EndCell);	// Get the new position of the rock
-					Cell target = board[move.StartCell.row, 1];	// Get the rook orignal position
+					Cell source = m_Board.RightCell(move.EndCell);	// Get the new position of the rock
+					Cell target = m_Board[move.StartCell.row, 1];	// Get the rook orignal position
 
-					board[source].piece.Moves--;	// decrement moves
-					board[target].piece = board[source].piece;		// Move object at the destination
-					board[source].piece = new Piece(Piece.PieceType.Empty);	// Empty the source location
+					m_Board[source].piece.Moves--;	// decrement moves
+					m_Board[target].piece = m_Board[source].piece;		// Move object at the destination
+					m_Board[source].piece = new Piece(Piece.PieceType.Empty);	// Empty the source location
 				}
 			}
 
@@ -229,9 +235,9 @@ namespace ChessLibrary
 
 				UndoNormalMove(move);
 				if (move.StartCell.piece.Side.isWhite())	// white piece was moved
-					EnPassantCell = board.BottomCell(move.EndCell);	// Get the cell under target position
+					EnPassantCell = m_Board.BottomCell(move.EndCell);	// Get the cell under target position
 				else
-					EnPassantCell = board.TopCell(move.EndCell);	// Get the cell under target position
+					EnPassantCell = m_Board.TopCell(move.EndCell);	// Get the cell under target position
 
 				EnPassantCell.piece = move.EnPassantPiece;	// set back the enpassant piece
 			}
@@ -240,32 +246,32 @@ namespace ChessLibrary
 		// Undo the normal move i.e. desitnation was empty; simply moe the source piece back to it's orignal
 		private void UndoNormalMove(Move move)
 		{
-			board[move.EndCell].piece = move.CapturedPiece;		// Move object at the destination
-			board[move.StartCell].piece = move.Piece;	// Empty the source location
-			board[move.StartCell].piece.Moves--;	// decrement moves
+			m_Board[move.EndCell].piece = move.CapturedPiece;		// Move object at the destination
+			m_Board[move.StartCell].piece = move.Piece;	// Empty the source location
+			m_Board[move.StartCell].piece.Moves--;	// decrement moves
 		}
 
 		// Return true if the given side type is under check state
         public bool IsUnderCheck(Side.SideType PlayerSide)
 		{
 			Cell OwnerKingCell=null;
-			ArrayList OwnerCells = board.GetSideCell(PlayerSide);
+			ArrayList OwnerCells = m_Board.GetSideCell(PlayerSide);
 
 			// loop all the owner squars and get his king cell
 			foreach (string CellName in OwnerCells)
 			{
-				if (board[CellName].piece.Type == Piece.PieceType.King )
+				if (m_Board[CellName].piece.Type == Piece.PieceType.King )
 				{
-					OwnerKingCell = board[CellName]; // store the enemy cell position
+					OwnerKingCell = m_Board[CellName]; // store the enemy cell position
 					break;	// break the loop
 				}
 			}
 
 			// Loop all the enemy squars and get their possible moves
-			ArrayList EnemyCells = board.GetSideCell((new Side(PlayerSide)).Enemy());
+			ArrayList EnemyCells = m_Board.GetSideCell((new Side(PlayerSide)).Enemy());
 			foreach (string CellName in EnemyCells)
 			{
-				ArrayList moves = GetPossibleMoves(board[CellName]);	// Get the moves for the enemy piece
+				ArrayList moves = GetPossibleMoves(m_Board[CellName]);	// Get the moves for the enemy piece
 				// King is directly under attack
 				if (moves.Contains(OwnerKingCell))	
 					return true;
@@ -279,10 +285,10 @@ namespace ChessLibrary
 			int TotalMoves=0;
            
 			// Loop all the owner squars and get their possible moves
-			ArrayList PlayerCells = board.GetSideCell(PlayerSide);
+			ArrayList PlayerCells = m_Board.GetSideCell(PlayerSide);
 			foreach (string CellName in PlayerCells)
 			{
-				ArrayList moves = GetLegalMoves(board[CellName]);	// Get all the legal moves for the owner piece
+				ArrayList moves = GetLegalMoves(m_Board[CellName]);	// Get all the legal moves for the owner piece
 				TotalMoves+=moves.Count;
 			}
 			return TotalMoves;
@@ -343,17 +349,17 @@ namespace ChessLibrary
 		public ArrayList GenerateAllLegalMoves(Side PlayerSide)
 		{
 			ArrayList TotalMoves = new ArrayList();
-			ArrayList PlayerCells = board.GetSideCell(PlayerSide.type);
+			ArrayList PlayerCells = m_Board.GetSideCell(PlayerSide.type);
 			Move move;	// contains the temporary move object
 
 			// Loop all the owner squars and get their possible moves
 			foreach (string CellName in PlayerCells)
 			{
-				ArrayList moves = GetLegalMoves(board[CellName]);	// Get all the legal moves for the owner piece
+				ArrayList moves = GetLegalMoves(m_Board[CellName]);	// Get all the legal moves for the owner piece
 				
 				foreach (Cell dest in moves)
 				{
-					move = new Move(board[CellName], dest);
+					move = new Move(m_Board[CellName], dest);
 					SetMoveType(move);				// Set the move type
 
 					if (move.IsPromoMove())			// Pawn promotion move
@@ -378,23 +384,23 @@ namespace ChessLibrary
 		public ArrayList GenerateGoodCaptureMoves(Side PlayerSide)
 		{
 			ArrayList TotalMoves = new ArrayList();
-			ArrayList PlayerCells = board.GetSideCell(PlayerSide.type);
+			ArrayList PlayerCells = m_Board.GetSideCell(PlayerSide.type);
 			Move move;	// contains the temporary move object
 
 			// Loop all the owner squars and get their possible moves
 			foreach (string CellName in PlayerCells)
 			{
 				// Currently we are only checking moves of high rank pieces
-				if (board[CellName].piece.GetWeight()> 100)
+				if (m_Board[CellName].piece.GetWeight()> 100)
 				{
-					ArrayList moves = GetLegalMoves(board[CellName]);	// Get all the legal moves for the owner piece
+					ArrayList moves = GetLegalMoves(m_Board[CellName]);	// Get all the legal moves for the owner piece
 				
 					foreach (Cell dest in moves)
 					{
 						// Check only capture moves
 						if ( dest.piece != null && !dest.piece.IsEmpty())
 						{
-							move = new Move(board[CellName], dest);
+							move = new Move(m_Board[CellName], dest);
 							//SetMoveType(move);		// Set the move type
 							TotalMoves.Add(move);	// Add the move to total moves
 						}
@@ -448,7 +454,7 @@ namespace ChessLibrary
 		private Move LastMoveWasPawnBegin()
 		{
 			// Now get user last move and see if it's a pawn move
-			Move lastmove = game.GetLastMove();
+			Move lastmove = m_Game.GetLastMove();
 
 			if (lastmove!=null)	// last moe is not available
 			{
@@ -468,25 +474,25 @@ namespace ChessLibrary
 			if (source.piece.Side.isWhite())
 			{
 				// Calculate moves for the white piece
-				newcell = board.TopCell(source);	
+				newcell = m_Board.TopCell(source);	
 				if (newcell!=null && newcell.IsEmpty()) // Top cell is available for the move
 					moves.Add(newcell);
 				
 				// Check the 2nd top element from source
 				if (newcell != null && newcell.IsEmpty())
 				{
-					newcell = board.TopCell(newcell);	
+					newcell = m_Board.TopCell(newcell);	
 					if (newcell!=null && source.piece.Moves == 0 && newcell.IsEmpty()) // 2nd top cell is available and piece has not yet moved
 						moves.Add(newcell);
 				}
 
 				// Check top-left cell for enemy piece
-				newcell = board.TopLeftCell(source);	
+				newcell = m_Board.TopLeftCell(source);	
 				if (newcell!=null && newcell.IsOwnedByEnemy(source)) // Top cell is available for the move
 					moves.Add(newcell);
 
 				// Check top-right cell for enemy piece
-				newcell = board.TopRightCell(source);	
+				newcell = m_Board.TopRightCell(source);	
 				if (newcell!=null && newcell.IsOwnedByEnemy(source)) // Top cell is available for the move
 					moves.Add(newcell);
 
@@ -499,14 +505,14 @@ namespace ChessLibrary
 					{
 						if (LastPawnMove.EndCell.col == source.col-1)	// En Passant pawn is on left side
 						{
-							newcell = board.TopLeftCell(source);	
+							newcell = m_Board.TopLeftCell(source);	
 							if (newcell!=null && newcell.IsEmpty()) // Top cell is available for the move
 								moves.Add(newcell);
 						}
 
 						if (LastPawnMove.EndCell.col == source.col+1)	// En Passant pawn is on left side
 						{
-							newcell = board.TopRightCell(source);	
+							newcell = m_Board.TopRightCell(source);	
 							if (newcell!=null && newcell.IsEmpty()) // Top cell is available for the move
 								moves.Add(newcell);
 						}
@@ -516,25 +522,25 @@ namespace ChessLibrary
 			else
 			{
 				// Calculate moves for the black piece
-				newcell = board.BottomCell(source);	
+				newcell = m_Board.BottomCell(source);	
 				if (newcell!=null && newcell.IsEmpty()) // bottom cell is available for the move
 					moves.Add(newcell);
 				
 				// Check the 2nd bottom cell from source
 				if (newcell!=null && newcell.IsEmpty())
 				{
-					newcell = board.BottomCell(newcell);	
+					newcell = m_Board.BottomCell(newcell);	
 					if (newcell!=null && source.piece.Moves == 0 && newcell.IsEmpty()) // 2nd bottom cell is available and piece has not yet moved
 						moves.Add(newcell);
 				}
 
 				// Check bottom-left cell for enemy piece
-				newcell = board.BottomLeftCell(source);	
+				newcell = m_Board.BottomLeftCell(source);	
 				if (newcell!=null && newcell.IsOwnedByEnemy(source)) // Bottom cell is available for the move
 					moves.Add(newcell);
 
 				// Check bottom-right cell for enemy piece
-				newcell = board.BottomRightCell(source);	
+				newcell = m_Board.BottomRightCell(source);	
 				if (newcell!=null && newcell.IsOwnedByEnemy(source)) // Bottom cell is available for the move
 					moves.Add(newcell);
 
@@ -547,14 +553,14 @@ namespace ChessLibrary
 					{
 						if (LastPawnMove.EndCell.col == source.col-1)	// En Passant pawn is on left side
 						{
-							newcell = board.BottomLeftCell(source);	
+							newcell = m_Board.BottomLeftCell(source);	
 							if (newcell!=null && newcell.IsEmpty()) // Bottom cell is available for the move
 								moves.Add(newcell);
 						}
 
 						if (LastPawnMove.EndCell.col == source.col+1)	// En Passant pawn is on left side
 						{
-							newcell = board.BottomRightCell(source);	
+							newcell = m_Board.BottomRightCell(source);	
 							if (newcell!=null && newcell.IsEmpty()) // Bottom cell is available for the move
 								moves.Add(newcell);
 						}
@@ -569,61 +575,61 @@ namespace ChessLibrary
 			Cell newcell;
 
 			// First check top two left and right moves for knight
-			newcell = board.TopCell(source);
+			newcell = m_Board.TopCell(source);
 			if (newcell!=null)
 			{
-				newcell = board.TopLeftCell(newcell);
+				newcell = m_Board.TopLeftCell(newcell);
 				// target cell is empty or is owned by the enemy piece
 				if (newcell!=null && !newcell.IsOwned(source)) 
 					moves.Add(newcell);
 
-				newcell = board.TopCell(source);
-				newcell = board.TopRightCell(newcell);
+				newcell = m_Board.TopCell(source);
+				newcell = m_Board.TopRightCell(newcell);
 				// target cell is empty or is owned by the enemy piece
 				if (newcell!=null && !newcell.IsOwned(source) ) 
 					moves.Add(newcell);
 			}
 			// Now check 2nd bottom left and right cells
-			newcell = board.BottomCell(source);
+			newcell = m_Board.BottomCell(source);
 			if (newcell!=null)
 			{
-				newcell = board.BottomLeftCell(newcell);
+				newcell = m_Board.BottomLeftCell(newcell);
 				// target cell is empty or is owned by the enemy piece
 				if (newcell!=null && !newcell.IsOwned(source) ) 
 					moves.Add(newcell);
 
-				newcell = board.BottomCell(source);
-				newcell = board.BottomRightCell(newcell);
+				newcell = m_Board.BottomCell(source);
+				newcell = m_Board.BottomRightCell(newcell);
 				// target cell is empty or is owned by the enemy piece
 				if (newcell!=null && !newcell.IsOwned(source) ) 
 					moves.Add(newcell);
 			}
 			// Now check 2nd Left Top and bottom cells
-			newcell = board.LeftCell(source);
+			newcell = m_Board.LeftCell(source);
 			if (newcell!=null)
 			{
-				newcell = board.TopLeftCell(newcell);
+				newcell = m_Board.TopLeftCell(newcell);
 				// target cell is empty or is owned by the enemy piece
 				if (newcell!=null && !newcell.IsOwned(source) ) 
 					moves.Add(newcell);
 
-				newcell = board.LeftCell(source);
-				newcell = board.BottomLeftCell(newcell);
+				newcell = m_Board.LeftCell(source);
+				newcell = m_Board.BottomLeftCell(newcell);
 				// target cell is empty or is owned by the enemy piece
 				if (newcell!=null && !newcell.IsOwned(source) ) 
 					moves.Add(newcell);
 			}
 			// Now check 2nd Right Top and bottom cells
-			newcell = board.RightCell(source);
+			newcell = m_Board.RightCell(source);
 			if (newcell!=null)
 			{
-				newcell = board.TopRightCell(newcell);
+				newcell = m_Board.TopRightCell(newcell);
 				// target cell is empty or is owned by the enemy piece
 				if (newcell!=null && !newcell.IsOwned(source) ) 
 					moves.Add(newcell);
 
-				newcell = board.RightCell(source);
-				newcell = board.BottomRightCell(newcell);
+				newcell = m_Board.RightCell(source);
+				newcell = m_Board.BottomRightCell(newcell);
 				// target cell is empty or is owned by the enemy piece
 				if (newcell!=null && !newcell.IsOwned(source) ) 
 					moves.Add(newcell);
@@ -636,7 +642,7 @@ namespace ChessLibrary
 			Cell newcell;
 
 			// Check all the move squars available in top direction
-			newcell = board.TopCell(source);
+			newcell = m_Board.TopCell(source);
 			while (newcell!=null)	// move as long as cell is available in this direction
 			{
 				if (newcell.IsEmpty())	//next cell is available for move
@@ -651,11 +657,11 @@ namespace ChessLibrary
 				if (newcell.IsOwned(source))	//next cell contains owner object
 					break;	// force quite the loop execution
 
-				newcell = board.TopCell(newcell); // keep moving in the top direction
+				newcell = m_Board.TopCell(newcell); // keep moving in the top direction
 			}
 
 			// Check all the move squars available in left direction
-			newcell = board.LeftCell(source);
+			newcell = m_Board.LeftCell(source);
 			while (newcell!=null)	// move as long as cell is available in this direction
 			{
 				if (newcell.IsEmpty())	//next cell is available for move
@@ -670,11 +676,11 @@ namespace ChessLibrary
 				if (newcell.IsOwned(source))	//next cell contains owner object
 					break;	// force quite the loop execution
 
-				newcell = board.LeftCell(newcell); // keep moving in the left direction
+				newcell = m_Board.LeftCell(newcell); // keep moving in the left direction
 			}
 
 			// Check all the move squars available in right direction
-			newcell = board.RightCell(source);
+			newcell = m_Board.RightCell(source);
 			while (newcell!=null)	// move as long as cell is available in this direction
 			{
 				if (newcell.IsEmpty())	//next cell is available for move
@@ -689,11 +695,11 @@ namespace ChessLibrary
 				if (newcell.IsOwned(source))	//next cell contains owner object
 					break;	// force quite the loop execution
 
-				newcell = board.RightCell(newcell); // keep moving in the right direction
+				newcell = m_Board.RightCell(newcell); // keep moving in the right direction
 			}
 
 			// Check all the move squars available in bottom direction
-			newcell = board.BottomCell(source);
+			newcell = m_Board.BottomCell(source);
 			while (newcell!=null)	// move as long as cell is available in this direction
 			{
 				if (newcell.IsEmpty())	//next cell is available for move
@@ -708,7 +714,7 @@ namespace ChessLibrary
 				if (newcell.IsOwned(source))	//next cell contains owner object
 					break;	// force quite the loop execution
 
-				newcell = board.BottomCell(newcell); // keep moving in the bottom direction
+				newcell = m_Board.BottomCell(newcell); // keep moving in the bottom direction
 			}
 		}
 
@@ -718,7 +724,7 @@ namespace ChessLibrary
 			Cell newcell;
 
 			// Check all the move squars available in top-left direction
-			newcell = board.TopLeftCell(source);
+			newcell = m_Board.TopLeftCell(source);
 			while (newcell!=null)	// move as long as cell is available in this direction
 			{
 				if (newcell.IsEmpty())	//next cell is available for move
@@ -733,11 +739,11 @@ namespace ChessLibrary
 				if (newcell.IsOwned(source))	//next cell contains owner object
 					break;	// force quite the loop execution
 
-				newcell = board.TopLeftCell(newcell); // keep moving in the top-left direction
+				newcell = m_Board.TopLeftCell(newcell); // keep moving in the top-left direction
 			}
 
 			// Check all the move squars available in top-right direction
-			newcell = board.TopRightCell(source);
+			newcell = m_Board.TopRightCell(source);
 			while (newcell!=null)	// move as long as cell is available in this direction
 			{
 				if (newcell.IsEmpty())	//next cell is available for move
@@ -752,11 +758,11 @@ namespace ChessLibrary
 				if (newcell.IsOwned(source))	//next cell contains owner object
 					break;	// force quite the loop execution
 
-				newcell = board.TopRightCell(newcell); // keep moving in the top-right direction
+				newcell = m_Board.TopRightCell(newcell); // keep moving in the top-right direction
 			}
 
 			// Check all the move squars available in bottom-left direction
-			newcell = board.BottomLeftCell(source);
+			newcell = m_Board.BottomLeftCell(source);
 			while (newcell!=null)	// move as long as cell is available in this direction
 			{
 				if (newcell.IsEmpty())	//next cell is available for move
@@ -771,11 +777,11 @@ namespace ChessLibrary
 				if (newcell.IsOwned(source))	//next cell contains owner object
 					break;	// force quite the loop execution
 
-				newcell = board.BottomLeftCell(newcell); // keep moving in the bottom-left direction
+				newcell = m_Board.BottomLeftCell(newcell); // keep moving in the bottom-left direction
 			}
 
 			// Check all the move squars available in the bottom-right direction
-			newcell = board.BottomRightCell(source);
+			newcell = m_Board.BottomRightCell(source);
 			while (newcell!=null)	// move as long as cell is available in this direction
 			{
 				if (newcell.IsEmpty())	//next cell is available for move
@@ -790,7 +796,7 @@ namespace ChessLibrary
 				if (newcell.IsOwned(source))	//next cell contains owner object
 					break;	// force quite the loop execution
 
-				newcell = board.BottomRightCell(newcell); // keep moving in the bottom-right direction
+				newcell = m_Board.BottomRightCell(newcell); // keep moving in the bottom-right direction
 			}
 		}
 
@@ -810,54 +816,54 @@ namespace ChessLibrary
 			// King can move to any of it's neighbor cells at the distance of one cell
 			
 			// check if king can move to top
-			newcell = board.TopCell(source);
+			newcell = m_Board.TopCell(source);
 			if (newcell!=null && !newcell.IsOwned(source)) // target cell is empty or is owned by the enemy piece
 				moves.Add(newcell);
 			// check if king can move to left
-			newcell = board.LeftCell(source);
+			newcell = m_Board.LeftCell(source);
 			if (newcell!=null && !newcell.IsOwned(source)) // target cell is empty or is owned by the enemy piece
 				moves.Add(newcell);
 			// check if king can move to right
-			newcell = board.RightCell(source);
+			newcell = m_Board.RightCell(source);
 			if (newcell!=null && !newcell.IsOwned(source)) // target cell is empty or is owned by the enemy piece
 				moves.Add(newcell);
 			// check if king can move to bottom
-			newcell = board.BottomCell(source);
+			newcell = m_Board.BottomCell(source);
 			if (newcell!=null && !newcell.IsOwned(source)) // target cell is empty or is owned by the enemy piece
 				moves.Add(newcell);
 			// check if king can move to top-left
-			newcell = board.TopLeftCell(source);
+			newcell = m_Board.TopLeftCell(source);
 			if (newcell!=null && !newcell.IsOwned(source)) // target cell is empty or is owned by the enemy piece
 				moves.Add(newcell);
 			// check if king can move to top-right
-			newcell = board.TopRightCell(source);
+			newcell = m_Board.TopRightCell(source);
 			if (newcell!=null && !newcell.IsOwned(source)) // target cell is empty or is owned by the enemy piece
 				moves.Add(newcell);
 			// check if king can move to bottom-left
-			newcell = board.BottomLeftCell(source);
+			newcell = m_Board.BottomLeftCell(source);
 			if (newcell!=null && !newcell.IsOwned(source)) // target cell is empty or is owned by the enemy piece
 				moves.Add(newcell);
 			// check if king can move to bottom-right
-			newcell = board.BottomRightCell(source);
+			newcell = m_Board.BottomRightCell(source);
 			if (newcell!=null && !newcell.IsOwned(source)) // target cell is empty or is owned by the enemy piece
 				moves.Add(newcell);
 
 			// Check castling or tower moves for the king
-			if (board[source].piece.Moves == 0)
+			if (m_Board[source].piece.Moves == 0)
 			{
 				Cell CastlingTarget=null;	// The cell where king will be moved in case of castling
 
 				// As king has not yet moved, so castling is possible
-				newcell = board.RightCell(source);
+				newcell = m_Board.RightCell(source);
 				if (newcell!=null && newcell.IsEmpty())	// cell is empty
 				{
 					if (!CauseCheck(new Move(source, newcell))) // Inbetween cell is not under check
 					{
-                        newcell = board.RightCell(newcell);
+                        newcell = m_Board.RightCell(newcell);
 						if (newcell!=null && newcell.IsEmpty())	// cell is empty
 						{
 							CastlingTarget = newcell;	// This will be the king destination position
-                            newcell = board.RightCell(newcell);
+                            newcell = m_Board.RightCell(newcell);
 							if (newcell!=null && !newcell.IsEmpty()  && newcell.piece.Moves==0)	// check if the rook piece has not yet moved
 								moves.Add(CastlingTarget);	// Add this as possible move
 						} 
@@ -865,19 +871,19 @@ namespace ChessLibrary
 				}
 
 				// Check on the left side
-				newcell = board.LeftCell(source);
+				newcell = m_Board.LeftCell(source);
 				if (newcell!=null && newcell.IsEmpty())	// cell is empty
 				{
 					if (!CauseCheck(new Move(source, newcell))) // Inbetween cell is not under check
 					{
-                        newcell = board.LeftCell(newcell);
+                        newcell = m_Board.LeftCell(newcell);
 						if (newcell!=null && newcell.IsEmpty())	// cell is empty
 						{
 							CastlingTarget = newcell;	// This will be the king destination position
-                            newcell = board.LeftCell(newcell);
+                            newcell = m_Board.LeftCell(newcell);
 							if (newcell!=null && newcell.IsEmpty())	// cell is empty
 							{
-                                newcell = board.LeftCell(newcell);
+                                newcell = m_Board.LeftCell(newcell);
 								if (newcell!=null && !newcell.IsEmpty() && newcell.piece.Moves==0)	// check if the rook piece has not yet moved
 									moves.Add(CastlingTarget);	// Add this as possible move
 							}
@@ -892,12 +898,12 @@ namespace ChessLibrary
         public int AnalyzeBoard(Side.SideType PlayerSide)
 		{
 			int Score=0;
-			ArrayList OwnerCells = board.GetSideCell(PlayerSide);
+			ArrayList OwnerCells = m_Board.GetSideCell(PlayerSide);
 			
 			// loop all the owner squars and get his king cell
 			foreach (string ChessCell in OwnerCells)
 			{
-				Score+=board[ChessCell].piece.GetWeight();
+				Score+=m_Board[ChessCell].piece.GetWeight();
 			}
 
 			//int iPossibleMoves = GetCountOfPossibleMoves(PlayerSide);

@@ -472,7 +472,7 @@ namespace Chess
             this.Menu = this.MainMenu;
             this.Name = "ChessMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Quick Chess";
+            this.Text = "CSChess";
             this.Load += new System.EventHandler(this.ChessMain_Load);
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.WhitePlayerImage)).EndInit();
