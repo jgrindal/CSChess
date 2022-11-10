@@ -8,3 +8,9 @@ D:\Projects\Misc\Chess\Working\ClassLibrary\bin\Debug\Chessbrary.pdb
 D:\Projects\Misc\Chess\Working\ClassLibrary\obj\Debug\ResolveAssemblyReference.cache
 D:\Projects\Misc\Chess\Working\ClassLibrary\obj\Debug\Chessbrary.dll
 D:\Projects\Misc\Chess\Working\ClassLibrary\obj\Debug\Chessbrary.pdb
+C:\Users\Ziggity\OneDrive\Desktop\Existing Code\chess\funny git version of chess1\ClassLibrary\bin\Debug\Chessbrary.dll
+C:\Users\Ziggity\OneDrive\Desktop\Existing Code\chess\funny git version of chess1\ClassLibrary\bin\Debug\Chessbrary.pdb
+C:\Users\Ziggity\OneDrive\Desktop\Existing Code\chess\funny git version of chess1\ClassLibrary\obj\Debug\ChessLibrary.csproj.AssemblyReference.cache
+C:\Users\Ziggity\OneDrive\Desktop\Existing Code\chess\funny git version of chess1\ClassLibrary\obj\Debug\ChessLibrary.csproj.CoreCompileInputs.cache
+C:\Users\Ziggity\OneDrive\Desktop\Existing Code\chess\funny git version of chess1\ClassLibrary\obj\Debug\Chessbrary.dll
+C:\Users\Ziggity\OneDrive\Desktop\Existing Code\chess\funny git version of chess1\ClassLibrary\obj\Debug\Chessbrary.pdb

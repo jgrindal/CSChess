@@ -28,3 +28,22 @@ D:\Projects\Misc\Chess\Working\Chess\obj\Debug\Chess.Squar.resources
 D:\Projects\Misc\Chess\Working\Chess\obj\Debug\Chess.csproj.GenerateResource.Cache
 D:\Projects\Misc\Chess\Working\Chess\obj\Debug\Chess.exe
 D:\Projects\Misc\Chess\Working\Chess\obj\Debug\Chess.pdb
+C:\Users\Ziggity\OneDrive\Desktop\Existing Code\chess\funny git version of chess1\Chess\bin\Debug\Chess.exe.config
+C:\Users\Ziggity\OneDrive\Desktop\Existing Code\chess\funny git version of chess1\Chess\bin\Debug\Chess.exe
+C:\Users\Ziggity\OneDrive\Desktop\Existing Code\chess\funny git version of chess1\Chess\bin\Debug\Chess.pdb
+C:\Users\Ziggity\OneDrive\Desktop\Existing Code\chess\funny git version of chess1\Chess\bin\Debug\Chessbrary.dll
+C:\Users\Ziggity\OneDrive\Desktop\Existing Code\chess\funny git version of chess1\Chess\bin\Debug\Chessbrary.pdb
+C:\Users\Ziggity\OneDrive\Desktop\Existing Code\chess\funny git version of chess1\Chess\obj\Debug\Chess.csproj.AssemblyReference.cache
+C:\Users\Ziggity\OneDrive\Desktop\Existing Code\chess\funny git version of chess1\Chess\obj\Debug\Chess.csproj.SuggestedBindingRedirects.cache
+C:\Users\Ziggity\OneDrive\Desktop\Existing Code\chess\funny git version of chess1\Chess\obj\Debug\Chess.AboutBox.resources
+C:\Users\Ziggity\OneDrive\Desktop\Existing Code\chess\funny git version of chess1\Chess\obj\Debug\Chess.CaptureBar.resources
+C:\Users\Ziggity\OneDrive\Desktop\Existing Code\chess\funny git version of chess1\Chess\obj\Debug\Chess.ChessMain.resources
+C:\Users\Ziggity\OneDrive\Desktop\Existing Code\chess\funny git version of chess1\Chess\obj\Debug\Chess.NewGame.resources
+C:\Users\Ziggity\OneDrive\Desktop\Existing Code\chess\funny git version of chess1\Chess\obj\Debug\Chess.Properties.Resources.resources
+C:\Users\Ziggity\OneDrive\Desktop\Existing Code\chess\funny git version of chess1\Chess\obj\Debug\Chess.SelectPiece.resources
+C:\Users\Ziggity\OneDrive\Desktop\Existing Code\chess\funny git version of chess1\Chess\obj\Debug\Chess.Squar.resources
+C:\Users\Ziggity\OneDrive\Desktop\Existing Code\chess\funny git version of chess1\Chess\obj\Debug\Chess.csproj.GenerateResource.cache
+C:\Users\Ziggity\OneDrive\Desktop\Existing Code\chess\funny git version of chess1\Chess\obj\Debug\Chess.csproj.CoreCompileInputs.cache
+C:\Users\Ziggity\OneDrive\Desktop\Existing Code\chess\funny git version of chess1\Chess\obj\Debug\Chess.csproj.CopyComplete
+C:\Users\Ziggity\OneDrive\Desktop\Existing Code\chess\funny git version of chess1\Chess\obj\Debug\Chess.exe
+C:\Users\Ziggity\OneDrive\Desktop\Existing Code\chess\funny git version of chess1\Chess\obj\Debug\Chess.pdb

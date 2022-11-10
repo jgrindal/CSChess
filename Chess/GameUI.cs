@@ -138,6 +138,14 @@ namespace Chess
 				//ParentForm.BlackPlayerName.Visible = true;
 				//ParentForm.WhitePlayerName.Visible = !ParentForm.WhitePlayerName.Visible; // Blink the player name
 			}
+
+			//Timeout
+			if (ParentForm.WhitePlayerTime.Text.Contains("00:04:") || ParentForm.BlackPlayerTime.Text.Contains("00:04:"))
+			{
+				Sounds.PlayGameOver();
+				IsOver = true;
+				MessageBox.Show(ChessGame.GetPlayerBySide(ChessGame.GameTurn).Name + " is time-out.", "Game Over", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+			}
 		}
 
 		// Called when it's the next player turn to play the move
